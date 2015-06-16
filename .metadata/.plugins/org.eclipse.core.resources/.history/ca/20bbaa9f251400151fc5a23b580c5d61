@@ -1,0 +1,11 @@
+/**
+ * 
+ */
+
+/**
+ * @author Quentin
+ *
+ */
+public class And extends Gate1 {
+
+}

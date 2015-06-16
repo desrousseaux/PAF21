@@ -1,5 +1,5 @@
 
-public abstract class Gate2 {
+public class Gate2 {
 	
 	private String output;
 	private String input1;
