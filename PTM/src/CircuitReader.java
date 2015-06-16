@@ -86,7 +86,11 @@ public class CircuitReader {
 		String name = "";
 		int i = 0;
 		while(array[i] != ' ') {
-			name += array[i];
+			i++;
+		}
+		i++;
+		while(array[i] != ' ') {
+			name = name + array[i];
 			i++;
 		}
 		while (array[i] != '(') {
@@ -115,7 +119,11 @@ public class CircuitReader {
 		char[] array = line.toCharArray();
 		String output = "";
 		String input = "";
-		int i = 12;
+		String name = "";
+		int i = 4;
+		while(array[i] != ' ') {
+			name = name + array[i];
+		}
 		while(array[i] != ',') {
 			output = output + array[i];
 			i++;
@@ -125,7 +133,7 @@ public class CircuitReader {
 			input = input + array[i];
 			i++;
 		}
-		return new Gate1(output, input, "not");
+		return new Gate1(output, input, name);
 		
 		
 	}
