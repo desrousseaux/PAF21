@@ -1,11 +1,12 @@
 import java.io.*;
+import java.util.ArrayList;
 
 
 public class CircuitReader {
 
 	private File file;
-	private String[] inputs;
-	private String[] outputs;
+	private ArrayList<String> inputs;
+	private ArrayList<String> outputs;
 	
 	public CircuitReader(String fileName) {
 		
@@ -40,12 +41,32 @@ public class CircuitReader {
 
 	private void createOutputs(String line) {
 		
-		
+		char[] array = line.toCharArray();
+		int l = array.length;
+		String current = "";
+		for (int i=7; i<l; i++) {
+			if (array[i] == ',' || array[i] == ';') {
+				outputs.add(current);
+				current = "";
+			} else {
+				current = current + array[i];
+			}
+		}
 	}
 	
 	private void createInputs(String line) {
 		
-		
+		char[] array = line.toCharArray();
+		int l = array.length;
+		String current = "";
+		for (int i=6; i<l; i++) {
+			if (array[i] == ',' || array[i] == ';') {
+				inputs.add(current);
+				current = "";
+			} else {
+				current = current + array[i];
+			}
+		}
 	}
 	
 	private Gate2 createGate2(String line) {
