@@ -1,4 +1,4 @@
-public abstract class Gate1 {
+public class Gate1 {
 	
 	private String output;
 	private String input;
