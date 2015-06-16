@@ -4,13 +4,14 @@ public abstract class Gate2 {
 	private String output;
 	private String input1;
 	private String input2;
-	private int[][] ptm;
+	private String name;
 	
-	public Gate2(String output, String input1, String input2) {
+	public Gate2(String output, String input1, String input2, String name) {
 		
 		this.output = output;
 		this.input1 = input1;
 		this.input2 = input2;
+		this.name = name;
 		
 	}
 	
@@ -32,9 +33,9 @@ public abstract class Gate2 {
 		
 	}
 	
-	public int[][] getPtm() {
+	public String getName() {
 		
-		return ptm;
+		return name;
 		
 	}
 }
