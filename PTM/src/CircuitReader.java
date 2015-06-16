@@ -16,15 +16,15 @@ public class CircuitReader {
 			String line;
 			while ((line = bis.readLine()) != null) {
 				if (line.substring(0, 5).equals("output")) {
-					line.createOutputs();
+					createOutputs(line);
 				} else if (line.substring(0, 4).equals("input")) {
-					line.createInputs();
+					createInputs(line);
 				} else {
 				String type = line.substring(0, 3);
 				if (type.equals("and ") || type.equals("or O") || type.equals("xor ") || type.equals("nand") || type.equals("nor ") || type.equals("xnor")) {
-					Gate2 gate2 = line.createGate2();
+					Gate2 gate2 = createGate2(line);
 				} else if (type.equals("not ")) {
-					Gate1 gate1 = line.createGate1();
+					Gate1 gate1 = createGate1(line);
 				}
 				}
 				
@@ -38,22 +38,22 @@ public class CircuitReader {
 		
 	}
 
-	private void createOutputs() {
+	private void createOutputs(String line) {
 		
 		
 	}
 	
-	private void createInputs() {
+	private void createInputs(String line) {
 		
 		
 	}
 	
-	private Gate2 createGate2() {
+	private Gate2 createGate2(String line) {
 		
 		
 	}
 	
-	private Gate1 createGate1() {
+	private Gate1 createGate1(String line) {
 		
 		
 	}
