@@ -7,6 +7,8 @@ public class CircuitReader {
 	private File file;
 	private ArrayList<String> inputs;
 	private ArrayList<String> outputs;
+	private ArrayList<Gate1> gates1;
+	private ArrayList<Gate2> gates2;
 	
 	public CircuitReader(String fileName) {
 		
@@ -23,9 +25,9 @@ public class CircuitReader {
 				} else {
 				String type = line.substring(0, 3);
 				if (type.equals("and ") || type.equals("or O") || type.equals("xor ") || type.equals("nand") || type.equals("nor ") || type.equals("xnor")) {
-					Gate2 gate2 = createGate2(line);
+					gates2.add(createGate2(line));
 				} else if (type.equals("not ")) {
-					Gate1 gate1 = createGate1(line);
+					gates1.add(createGate1(line));
 				}
 				}
 				
@@ -71,10 +73,53 @@ public class CircuitReader {
 	
 	private Gate2 createGate2(String line) {
 		
-		
+		char[] array = line.toCharArray();
+		String output = "";
+		String input1 = "";
+		String input2 = "";
+		String name = "";
+		int i = 0;
+		while(array[i] != ' ') {
+			name += array[i];
+			i++;
+		}
+		while (array[i] != '(') {
+			i++;
+		}
+		i++;
+		while(array[i] != ',') {
+			output = output + array[i];
+			i++;
+		}
+		i++;
+		while(array[i] != ',') {
+			input1 = input1 + array[i];
+			i++;
+		}
+		i++;
+		while(array[i] != ')') {
+			input2 = input2 + array[i];
+			i++;
+		}
+		return new Gate2(output, input1, input2, name);
 	}
 	
 	private Gate1 createGate1(String line) {
+		
+		char[] array = line.toCharArray();
+		String output = "";
+		String input = "";
+		int i = 12;
+		while(array[i] != ',') {
+			output = output + array[i];
+			i++;
+		}
+		i++;
+		while(array[i] != ')') {
+			input = input + array[i];
+			i++;
+		}
+		return new Gate1(output, input, "not");
 		
 		
 	}
