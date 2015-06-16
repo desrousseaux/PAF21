@@ -4,7 +4,7 @@ public abstract class Gate1 {
 	private String input;
 	private int[][] ptm;
 	
-	public Gate1(String output; String input) {
+	public Gate1(String output, String input) {
 		
 		this.output = output;
 		this.input = input;
