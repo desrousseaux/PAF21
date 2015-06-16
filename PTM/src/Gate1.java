@@ -1,32 +1,17 @@
-public class Gate1 {
+public class Gate1 extends Gate {
 	
-	private String output;
 	private String input;
-	private String name;
 	
 	public Gate1(String output, String input, String name) {
 		
-		this.output = output;
+		super(output, name);
 		this.input = input;
-		this.name = name;
-		
-	}
-	
-	public String getOutput() {
-		
-		return output;
 		
 	}
 	
 	public String getInput() {
 		
 		return input;
-		
-	}
-	
-	public String getName() {
-		
-		return name;
 		
 	}
 }

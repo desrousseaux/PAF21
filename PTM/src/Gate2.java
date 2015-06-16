@@ -1,23 +1,14 @@
 
-public class Gate2 {
+public class Gate2 extends Gate {
 	
-	private String output;
 	private String input1;
 	private String input2;
-	private String name;
 	
 	public Gate2(String output, String input1, String input2, String name) {
 		
-		this.output = output;
+		super(output, name);
 		this.input1 = input1;
 		this.input2 = input2;
-		this.name = name;
-		
-	}
-	
-	public String getOutput() {
-		
-		return output;
 		
 	}
 	
@@ -33,9 +24,9 @@ public class Gate2 {
 		
 	}
 	
-	public String getName() {
+	public String getInput() {
 		
-		return name;
+		return input1 + " " + input2;
 		
 	}
 }

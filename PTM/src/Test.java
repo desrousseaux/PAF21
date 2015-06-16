@@ -16,9 +16,9 @@ public class Test {
 			System.out.println(output);
 		}*/
 		
-		ArrayList<Gate2> gates2 = cr.getGates2();
-		for (Gate2 gate : gates2) {
-			System.out.println("name " + gate.getName() + " output " + gate.getOutput() + " inputs " + gate.getInput1() + " " + gate.getInput2());
+		ArrayList<Gate> gates = cr.getGates();
+		for (Gate gate : gates) {
+			System.out.println("name " + gate.getName() + " output " + gate.getOutput() + " inputs " + gate.getInput());
 		}
 
 	}

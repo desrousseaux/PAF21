@@ -7,16 +7,14 @@ public class CircuitReader {
 	private File file;
 	private ArrayList<String> inputs;
 	private ArrayList<String> outputs;
-	private ArrayList<Gate1> gates1;
-	private ArrayList<Gate2> gates2;
+	private ArrayList<Gate> gates;
 	
 	public CircuitReader(String fileName) {
 		
 		file = new File(fileName);
 		inputs = new ArrayList<String>();
 		outputs = new ArrayList<String>();
-		gates1 = new ArrayList<Gate1>();
-		gates2 = new ArrayList<Gate2>();
+		gates = new ArrayList<Gate>();
 		try {
 			FileReader fr = new FileReader(file);
 			BufferedReader bis = new BufferedReader(fr);
@@ -30,9 +28,9 @@ public class CircuitReader {
 				} else {
 				String type = line.substring(0, 4);
 				if (type.equals("and ") || type.equals("or O") || type.equals("xor ") || type.equals("nand") || type.equals("nor ") || type.equals("xnor")) {
-					gates2.add(createGate2(line));
+					gates.add(createGate2(line));
 				} else if (type.equals("not ")) {
-					gates1.add(createGate1(line));
+					gates.add(createGate1(line));
 				}
 				}
 				}
@@ -150,9 +148,9 @@ public class CircuitReader {
 		
 	}
 	
-	public ArrayList<Gate2> getGates2() {
+	public ArrayList<Gate> getGates() {
 		
-		return gates2;
+		return gates;
 		
 	}
 }
