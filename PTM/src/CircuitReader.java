@@ -13,21 +13,27 @@ public class CircuitReader {
 	public CircuitReader(String fileName) {
 		
 		file = new File(fileName);
+		inputs = new ArrayList<String>();
+		outputs = new ArrayList<String>();
+		gates1 = new ArrayList<Gate1>();
+		gates2 = new ArrayList<Gate2>();
 		try {
 			FileReader fr = new FileReader(file);
 			BufferedReader bis = new BufferedReader(fr);
 			String line;
 			while ((line = bis.readLine()) != null) {
-				if (line.substring(0, 5).equals("output")) {
+				if (!line.equals("")) {
+				if (line.substring(0, 6).equals("output")) {
 					createOutputs(line);
-				} else if (line.substring(0, 4).equals("input")) {
+				} else if (line.substring(0, 5).equals("input")) {
 					createInputs(line);
 				} else {
-				String type = line.substring(0, 3);
+				String type = line.substring(0, 4);
 				if (type.equals("and ") || type.equals("or O") || type.equals("xor ") || type.equals("nand") || type.equals("nor ") || type.equals("xnor")) {
 					gates2.add(createGate2(line));
 				} else if (type.equals("not ")) {
 					gates1.add(createGate1(line));
+				}
 				}
 				}
 				
@@ -121,6 +127,24 @@ public class CircuitReader {
 		}
 		return new Gate1(output, input, "not");
 		
+		
+	}
+	
+	public ArrayList<String> getInputs() {
+		
+		return inputs;
+		
+	}
+	
+	public ArrayList<String> getOutputs() {
+		
+		return outputs;
+		
+	}
+	
+	public ArrayList<Gate2> getGates2() {
+		
+		return gates2;
 		
 	}
 }
