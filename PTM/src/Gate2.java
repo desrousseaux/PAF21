@@ -22,17 +22,17 @@ public abstract class Gate2 {
 	
 	public String getInput1() {
 		
-		return intput1;
+		return input1;
 		
 	}
 	
 	public String getInput2() {
 		
-		return input;
+		return input2;
 		
 	}
 	
-	public String getPtm() {
+	public int[][] getPtm() {
 		
 		return ptm;
 		
