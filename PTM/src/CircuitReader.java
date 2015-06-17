@@ -164,7 +164,59 @@ public class CircuitReader {
 	
 	public String getFormula() {
 		
-		String formula = "";
+		String formula = "1";
+		ArrayList<Gate> remainingGates = gates;
+		ArrayList<Gate> newRemainingGates = new ArrayList<Gate>();
+		ArrayList<String> currentLevel = outputs;
+		int iteration = 0;
+		while (!remainingGates.isEmpty()) {
+			iteration++;
+			if (iteration==10) return "stop";
+			formula = formula + "*(";
+			int nbParentheses = 0;
+			for (String out : currentLevel) {
+				System.out.println(iteration + " " + out);
+				if (inputs.contains(out)) {
+					formula = formula + "kron(eye(2),";
+					nbParentheses++;
+				}
+			}
+			for (Gate gate : remainingGates) {
+				System.out.println(iteration + " " + gate.getName() + " out " + gate.getOutput());
+				if (currentLevel.contains(gate.getOutput())) {
+					currentLevel.remove(currentLevel.indexOf(gate.getOutput()));
+					System.out.println(iteration + " " + gate.getOutput() + "removed");
+						try {
+							if (gate.getClass()==Class.forName("Gate1")) {
+								if (!currentLevel.contains(gate.getInput())) {
+									currentLevel.add(gate.getInput());
+								}
+							} else if (gate.getClass()==Class.forName("Gate2")) {
+								if (!currentLevel.contains(((Gate2)gate).getInput1())) {
+									currentLevel.add(((Gate2)gate).getInput1());
+									System.out.println(iteration + " " + ((Gate2)gate).getInput1() + "added");
+								}
+								if (!currentLevel.contains(((Gate2)gate).getInput2())) {
+									currentLevel.add(((Gate2)gate).getInput2());
+									System.out.println(iteration + " " + ((Gate2)gate).getInput2() + "added");
+								}
+							}
+						} catch (ClassNotFoundException e) {
+							e.printStackTrace();
+						}
+						formula = formula + "kron(" + gate.getType() + ",";
+						nbParentheses++;
+				} else {
+					newRemainingGates.add(gate);
+				}
+			}
+			remainingGates = newRemainingGates;
+			newRemainingGates = new ArrayList<Gate>();
+			formula = formula + "1";
+			for (int i=0; i<=nbParentheses; i++) {
+				formula = formula + ")";
+			}
+		}
 		
 		return formula;
 	}

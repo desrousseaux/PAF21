@@ -16,10 +16,12 @@ public class Test {
 			System.out.println(output);
 		}*/
 		
-		ArrayList<Gate> gates = cr.getGates();
+		/*ArrayList<Gate> gates = cr.getGates();
 		for (Gate gate : gates) {
-			System.out.println("name " + gate.getName() + " output " + gate.getOutput() + " inputs " + gate.getInput());
-		}
+			System.out.println("type " + gate.getType() + " output " + gate.getOutput() + " inputs " + gate.getInput());
+		}*/
+		
+		System.out.println(cr.getFormula());
 
 	}
 

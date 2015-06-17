@@ -9,7 +9,7 @@ public abstract class Gate {
 		
 		this.output = output;
 		this.name = name;
-		this.type = type;
+		this.type = type.toUpperCase();
 		
 	}
 	
