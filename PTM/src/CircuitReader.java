@@ -102,10 +102,12 @@ public class CircuitReader {
 			i++;
 		}
 		i++;
+		i++;
 		while(array[i] != ',') {
 			input1 = input1 + array[i];
 			i++;
 		}
+		i++;
 		i++;
 		while(array[i] != ')') {
 			input2 = input2 + array[i];
@@ -134,6 +136,7 @@ public class CircuitReader {
 			output = output + array[i];
 			i++;
 		}
+		i++;
 		i++;
 		while(array[i] != ')') {
 			input = input + array[i];
@@ -168,24 +171,24 @@ public class CircuitReader {
 		ArrayList<Gate> remainingGates = gates;
 		ArrayList<Gate> newRemainingGates = new ArrayList<Gate>();
 		ArrayList<String> currentLevel = outputs;
-		int iteration = 0;
+		//int iteration = 0;
 		while (!remainingGates.isEmpty()) {
-			iteration++;
-			if (iteration==10) return "stop";
+			//iteration++;
+			//if (iteration==10) return "stop";
 			formula = formula + "*(";
 			int nbParentheses = 0;
 			for (String out : currentLevel) {
-				System.out.println(iteration + " " + out);
+				//System.out.println(iteration + " " + out);
 				if (inputs.contains(out)) {
 					formula = formula + "kron(eye(2),";
 					nbParentheses++;
 				}
 			}
 			for (Gate gate : remainingGates) {
-				System.out.println(iteration + " " + gate.getName() + " out " + gate.getOutput());
+				//System.out.println(iteration + " " + gate.getName() + " out " + gate.getOutput());
 				if (currentLevel.contains(gate.getOutput())) {
 					currentLevel.remove(currentLevel.indexOf(gate.getOutput()));
-					System.out.println(iteration + " " + gate.getOutput() + "removed");
+					//System.out.println(iteration + " " + gate.getOutput() + " removed");
 						try {
 							if (gate.getClass()==Class.forName("Gate1")) {
 								if (!currentLevel.contains(gate.getInput())) {
@@ -194,11 +197,11 @@ public class CircuitReader {
 							} else if (gate.getClass()==Class.forName("Gate2")) {
 								if (!currentLevel.contains(((Gate2)gate).getInput1())) {
 									currentLevel.add(((Gate2)gate).getInput1());
-									System.out.println(iteration + " " + ((Gate2)gate).getInput1() + "added");
+									//System.out.println(iteration + " " + ((Gate2)gate).getInput1() + " added");
 								}
 								if (!currentLevel.contains(((Gate2)gate).getInput2())) {
 									currentLevel.add(((Gate2)gate).getInput2());
-									System.out.println(iteration + " " + ((Gate2)gate).getInput2() + "added");
+									//System.out.println(iteration + " " + ((Gate2)gate).getInput2() + " added");
 								}
 							}
 						} catch (ClassNotFoundException e) {
