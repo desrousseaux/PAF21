@@ -82,8 +82,10 @@ public class CircuitReader {
 		String input1 = "";
 		String input2 = "";
 		String name = "";
+		String type = "";
 		int i = 0;
 		while(array[i] != ' ') {
+			type = type + array[i];
 			i++;
 		}
 		i++;
@@ -109,7 +111,7 @@ public class CircuitReader {
 			input2 = input2 + array[i];
 			i++;
 		}
-		return new Gate2(output, input1, input2, name);
+		return new Gate2(output, input1, input2, name, type);
 	}
 	
 	private Gate1 createGate1(String line) {
@@ -118,9 +120,15 @@ public class CircuitReader {
 		String output = "";
 		String input = "";
 		String name = "";
-		int i = 4;
+		String type = "";
+		int i = 0;
+		while (array[i] != ' ') {
+			type = type + array[i];
+			i++;
+		}
 		while(array[i] != ' ') {
 			name = name + array[i];
+			i++;
 		}
 		while(array[i] != ',') {
 			output = output + array[i];
@@ -131,7 +139,7 @@ public class CircuitReader {
 			input = input + array[i];
 			i++;
 		}
-		return new Gate1(output, input, name);
+		return new Gate1(output, input, name, type);
 		
 		
 	}
@@ -152,5 +160,12 @@ public class CircuitReader {
 		
 		return gates;
 		
+	}
+	
+	public String getFormula() {
+		
+		String formula = "";
+		
+		return formula;
 	}
 }

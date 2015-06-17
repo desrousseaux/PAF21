@@ -4,9 +4,9 @@ public class Gate2 extends Gate {
 	private String input1;
 	private String input2;
 	
-	public Gate2(String output, String input1, String input2, String name) {
+	public Gate2(String output, String input1, String input2, String name, String type) {
 		
-		super(output, name);
+		super(output, name, type);
 		this.input1 = input1;
 		this.input2 = input2;
 		
