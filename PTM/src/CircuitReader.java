@@ -15,9 +15,11 @@ public class CircuitReader {
 		inputs = new ArrayList<String>();
 		outputs = new ArrayList<String>();
 		gates = new ArrayList<Gate>();
+		FileReader fr = null;
+		BufferedReader bis = null;
 		try {
-			FileReader fr = new FileReader(file);
-			BufferedReader bis = new BufferedReader(fr);
+			fr = new FileReader(file);
+			bis = new BufferedReader(fr);
 			String line;
 			while ((line = bis.readLine()) != null) {
 				if (!line.equals("")) {
@@ -40,6 +42,13 @@ public class CircuitReader {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				bis.close();
+				fr.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		
@@ -171,37 +180,53 @@ public class CircuitReader {
 		ArrayList<Gate> remainingGates = gates;
 		ArrayList<Gate> newRemainingGates = new ArrayList<Gate>();
 		ArrayList<String> currentLevel = outputs;
-		//int iteration = 0;
+		ArrayList<String> fanouts = new ArrayList<String>();
 		while (!remainingGates.isEmpty()) {
-			//iteration++;
-			//if (iteration==10) return "stop";
 			formula = formula + "*(";
 			int nbParentheses = 0;
 			for (String out : currentLevel) {
-				//System.out.println(iteration + " " + out);
 				if (inputs.contains(out)) {
-					formula = formula + "kron(eye(2),";
+					formula = formula + "kron(ID,";
 					nbParentheses++;
 				}
 			}
 			for (Gate gate : remainingGates) {
-				//System.out.println(iteration + " " + gate.getName() + " out " + gate.getOutput());
-				if (currentLevel.contains(gate.getOutput())) {
-					currentLevel.remove(currentLevel.indexOf(gate.getOutput()));
-					//System.out.println(iteration + " " + gate.getOutput() + " removed");
+				String output = gate.getOutput();
+				if (currentLevel.contains(output) || fanouts.contains(output)) {
+					
 						try {
-							if (gate.getClass()==Class.forName("Gate1")) {
-								if (!currentLevel.contains(gate.getInput())) {
-									currentLevel.add(gate.getInput());
+							Class<? extends Gate> gateN = gate.getClass();
+							if (gateN==Class.forName("Gate1")) {
+								String input = gate.getInput();
+								if (!currentLevel.contains(input)) {
+									currentLevel.add(input);
+									currentLevel.remove(currentLevel.indexOf(output));
+								} else if (!fanouts.contains(input)){
+									Gate2 fanout = new Gate2(input,input,input,"fanout"+input, "FANOUT");
+									newRemainingGates.add(fanout);
+									fanouts.add(input);
 								}
-							} else if (gate.getClass()==Class.forName("Gate2")) {
-								if (!currentLevel.contains(((Gate2)gate).getInput1())) {
-									currentLevel.add(((Gate2)gate).getInput1());
-									//System.out.println(iteration + " " + ((Gate2)gate).getInput1() + " added");
+							} else if (gateN==Class.forName("Gate2")) {
+								Gate2 newGate = (Gate2)gate;
+								String input1 = newGate.getInput1();
+								String input2 = newGate.getInput2();
+								if (!currentLevel.contains(input1)) {
+									currentLevel.add(input1);
+									currentLevel.remove(currentLevel.indexOf(output));
+								} else if (!fanouts.contains(input1)){
+									Gate2 fanout = new Gate2(input1,input1,input1,"fanout"+input1, "FANOUT");
+									newRemainingGates.add(fanout);
+									fanouts.add(input1);
 								}
-								if (!currentLevel.contains(((Gate2)gate).getInput2())) {
-									currentLevel.add(((Gate2)gate).getInput2());
-									//System.out.println(iteration + " " + ((Gate2)gate).getInput2() + " added");
+								if (!currentLevel.contains(input2)) {
+									currentLevel.add(input2);
+									if (currentLevel.contains(output)) {
+										currentLevel.remove(currentLevel.indexOf(output));
+									}
+								} else if (!fanouts.contains(input2)){
+									Gate2 fanout = new Gate2(input2,input2,input2,"fanout"+input2, "FANOUT");
+									newRemainingGates.add(fanout);
+									fanouts.add(input2);
 								}
 							}
 						} catch (ClassNotFoundException e) {
