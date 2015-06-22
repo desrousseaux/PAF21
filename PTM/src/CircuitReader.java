@@ -176,12 +176,19 @@ public class CircuitReader {
 	
 	public String getFormula() {
 		
+		int iteration = 0;
 		String formula = "1";
 		ArrayList<Gate> remainingGates = gates;
 		ArrayList<Gate> newRemainingGates = new ArrayList<Gate>();
 		ArrayList<String> currentLevel = outputs;
-		ArrayList<String> fanouts = new ArrayList<String>();
+		ArrayList<Gate> fanouts = new ArrayList<Gate>();
 		while (!remainingGates.isEmpty()) {
+			iteration++;
+			if (iteration==10) {
+				System.out.println("stop");
+				return "";
+			}
+			System.out.println("iteration " + iteration + " :");
 			formula = formula + "*(";
 			int nbParentheses = 0;
 			for (String out : currentLevel) {
@@ -191,6 +198,7 @@ public class CircuitReader {
 				}
 			}
 			for (Gate gate : remainingGates) {
+				System.out.println(gate.getName());
 				String output = gate.getOutput();
 				if (currentLevel.contains(output) || fanouts.contains(output)) {
 					
@@ -203,8 +211,7 @@ public class CircuitReader {
 									currentLevel.remove(currentLevel.indexOf(output));
 								} else if (!fanouts.contains(input)){
 									Gate2 fanout = new Gate2(input,input,input,"fanout"+input, "FANOUT");
-									newRemainingGates.add(fanout);
-									fanouts.add(input);
+									fanouts.add(fanout);
 								}
 							} else if (gateN==Class.forName("Gate2")) {
 								Gate2 newGate = (Gate2)gate;
@@ -212,21 +219,18 @@ public class CircuitReader {
 								String input2 = newGate.getInput2();
 								if (!currentLevel.contains(input1)) {
 									currentLevel.add(input1);
-									currentLevel.remove(currentLevel.indexOf(output));
 								} else if (!fanouts.contains(input1)){
 									Gate2 fanout = new Gate2(input1,input1,input1,"fanout"+input1, "FANOUT");
-									newRemainingGates.add(fanout);
-									fanouts.add(input1);
+									fanouts.add(fanout);
 								}
 								if (!currentLevel.contains(input2)) {
 									currentLevel.add(input2);
-									if (currentLevel.contains(output)) {
-										currentLevel.remove(currentLevel.indexOf(output));
-									}
 								} else if (!fanouts.contains(input2)){
 									Gate2 fanout = new Gate2(input2,input2,input2,"fanout"+input2, "FANOUT");
-									newRemainingGates.add(fanout);
-									fanouts.add(input2);
+									fanouts.add(fanout);
+								}
+								if (currentLevel.contains(output)) {
+									currentLevel.remove(currentLevel.indexOf(output));
 								}
 							}
 						} catch (ClassNotFoundException e) {
@@ -238,8 +242,15 @@ public class CircuitReader {
 					newRemainingGates.add(gate);
 				}
 			}
+			if (!fanouts.isEmpty()) {
+				for (Gate fan : fanouts) {
+					formula = formula + "kron(FANOUT,";
+					nbParentheses++;
+				}
+			}
 			remainingGates = newRemainingGates;
 			newRemainingGates = new ArrayList<Gate>();
+			fanouts = new ArrayList<Gate>();
 			formula = formula + "1";
 			for (int i=0; i<=nbParentheses; i++) {
 				formula = formula + ")";
