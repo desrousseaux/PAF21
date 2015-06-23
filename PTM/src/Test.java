@@ -6,6 +6,7 @@ public class Test {
 	public static void main(String[] args) {
 
 		CircuitReader cr = new CircuitReader("PTM/src/c17.v");
+		CircuitReader cr1 = new CircuitReader("PTM/src/c17.v");
 		/*ArrayList<String> inputs = cr.getInputs();
 		for (String input : inputs) {
 			System.out.println(input);
@@ -22,6 +23,7 @@ public class Test {
 		}*/
 		
 		System.out.println(cr.getFormula());
+		System.out.println(cr1.getFormula1());
 
 	}
 
