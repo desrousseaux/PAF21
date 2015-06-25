@@ -6,3 +6,4 @@ OR1=orpaf(1,1,1,1).';
 NOR1=norpaf(1,1,1,1).';
 XOR1=xorpaf(1,1,1,1).';
 XNOR1=xnorpaf(1,1,1,1).';
+FANOUT1=fanoutpaf(1,1).';

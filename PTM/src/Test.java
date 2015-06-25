@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 import matlabcontrol.*;
+import matlabcontrol.extensions.*;
 
 public class Test {
 
@@ -35,15 +36,31 @@ public class Test {
 		double rows = Math.pow(2, cr.getOutputs().size());
 		double columns = Math.pow(2, cr.getInputs().size());
 		double[][] PTM = new double[(int)rows][(int)columns];
+		double[][] ITM = new double[(int)rows][(int)columns];
+		double R = 0;
 		MatlabProxyFactory factory = new MatlabProxyFactory();
 		try {
 			MatlabProxy proxy = factory.getProxy();
 			
 			try {
 				proxy.eval("PTM");
+				proxy.eval("ITM");
 				proxy.setVariable("PTM", PTM);
 				proxy.eval("PTM = " + cr.getFormula());
-				PTM = (double[][])proxy.getVariable("PTM");
+				MatlabTypeConverter processor = new MatlabTypeConverter(proxy);
+				MatlabNumericArray arrayPTM = processor.getNumericArray("PTM");
+				PTM = arrayPTM.getRealArray2D();
+				proxy.setVariable("ITM", ITM);
+				proxy.eval("ITM = " + cr1.getFormula1());
+				MatlabNumericArray arrayITM = processor.getNumericArray("ITM");
+				ITM = arrayITM.getRealArray2D();
+				proxy.setVariable("R", R);
+				proxy.eval("R = reliability(PTM,ITM)");
+				MatlabNumericArray arrayR = processor.getNumericArray("R");
+				R = arrayR.getRealValue(0);
+				System.out.println(R);
+				
+				
 			} catch (MatlabInvocationException e) {
 				e.printStackTrace();
 			}
@@ -51,12 +68,11 @@ public class Test {
 		} catch (MatlabConnectionException e) {
 			e.printStackTrace();
 		}
-		for (int i=0; i<(int)rows; i++) {
+		/*for (int i=0; i<(int)rows; i++) {
 			for (int j=0; j<(int)columns; j++) {
 				System.out.println(PTM[i][j] + " ");
 			}
-			System.out.println("");
-		}
+			System.*/
 
 	}
 
