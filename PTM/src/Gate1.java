@@ -1,3 +1,4 @@
+//Portes à 1 entrée
 public class Gate1 extends Gate {
 	
 	private String input;

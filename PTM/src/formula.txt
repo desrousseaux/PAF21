@@ -1,1 +1,0 @@
-1*(kron(NAND,kron(NAND,1)))*(kron(FANOUT,kron(ID,kron(ID,1))))*(kron(NAND,kron(NAND,kron(NAND,1))))*(kron(FANOUT,kron(ID,kron(ID,kron(ID,kron(ID,1))))))*(kron(ID,kron(ID,kron(ID,kron(ID,kron(NAND,1))))))*(kron(FANOUT,kron(ID,kron(ID,kron(ID,kron(ID,1))))))

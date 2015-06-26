@@ -12,7 +12,7 @@ for i = 1 : size(ITM,1)*size(ITM,2)
     
 end
 
-R = 1/size (PTM,1)*S;
+R = 1/size (PTM,2)*S;
 
 end
 

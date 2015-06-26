@@ -1,4 +1,4 @@
-
+//Représentation générale d'une porte
 public abstract class Gate {
 
 	private String output;
